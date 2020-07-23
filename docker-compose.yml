@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+    rhasspy:
+        image: "synesthesiam/rhasspy-server"
+        container_name: rhasspy
+        restart: unless-stopped
+        volumes:
+            - "$HOME/.config/rhasspy/profiles:/profiles"
+            - "/etc/localtime:/etc/localtime:ro"
+        ports:
+            - "12101:12101"
+        devices:
+            - "/dev/snd:/dev/snd"
+        command: --user-profiles /profiles --profile fr
+
+    marytts:
+        image: synesthesiam/marytts:5.2
+        container_name: marytts
+        restart: unless-stopped
+        ports:
+            - "59125:59125"
